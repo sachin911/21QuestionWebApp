@@ -55,7 +55,6 @@
     "test": "clear && _mocha --compilers css:ignore-styles ./.setup.js \"test\" --recursive",
     "test:watch": "npm run test -- --watch",
     "deploy": "pushstate-server build",
-    "homepage": "https://media-gallery.herokuapp.com",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive"
