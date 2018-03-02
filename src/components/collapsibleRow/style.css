@@ -1,0 +1,16 @@
+.rowHeader {
+  border: 1px solid darkgrey;
+  border-radius: 5px;
+  display: inline-block;
+  width: 100%; }
+  .rowHeader__button {
+    float: right;
+    width: 100%;
+    cursor: pointer; }
+  .rowHeader .rowHeader__button:hover {
+    background-color: #cacaca; }
+
+.contentContainer {
+  border: 1px solid darkgrey;
+  border-radius: 5px;
+  cursor: pointer; }

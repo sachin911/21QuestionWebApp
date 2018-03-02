@@ -1,0 +1,47 @@
+.topNav{
+	background-color: #efefdeb5;
+	position: relative;
+	opacity: .9;
+	height: 83px;
+
+	&-logo{
+		height: 150px;
+    width: 150px;
+    position: absolute;
+    padding: 20px;
+    display: inline-block;
+    box-sizing: border-box;
+    margin-top: -20px;
+    z-index: 100;
+	}
+
+	&-menu{
+		position: absolute;
+		top: 25px;
+		right: 15px;
+		font-size: 20px;
+		text-align: center;
+	}
+}
+
+@media only screen and (min-width: 700px){
+	.topNav-menu {
+		position: absolute;
+		top: 25px;
+		right: 30px;
+		font-size: 30px;
+		text-align: center;
+	}
+}
+
+@media only screen and (min-width: 1025px) {
+	.topNav {
+		height: 100px;
+	}
+
+	.topNav-logo  {
+		height: 200px;
+		width: 200px;
+		margin-top: -40px;
+  }
+}

@@ -1,0 +1,17 @@
+.footer-left {
+  position: fixed;
+  bottom: 5px;
+  left: 5px;
+  cursor: pointer; }
+  .footer-left--openTab {
+    position: fixed;
+    bottom: 33px;
+    left: 5px;
+    height: 50%;
+    background-color: #efefdeb5;
+    width: 105px;
+    text-align: center;
+    overflow-y: auto; }
+
+.footer-left:hover {
+  background-color: #efefdeb5; }

@@ -1,0 +1,11 @@
+.app-name {
+  text-align: center;
+  font-size: 30px; }
+
+.login-error {
+  display: block;
+  color: red; }
+
+@media only screen and (min-width: 700px) {
+  .app-name {
+    font-size: 50px; } }

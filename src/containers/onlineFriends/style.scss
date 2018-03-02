@@ -1,0 +1,20 @@
+.footer-right{
+	position: fixed;
+	bottom: 5px;
+	right: 5px;
+	cursor: pointer;
+
+	&--openTab {
+		position: fixed;
+		bottom: 33px;
+		right: 5px;
+		height: 50%;
+		background-color: #efefdeb5;
+		width: 100px;
+    text-align: center;
+	}
+}
+
+.footer-right:hover {
+	background-color: #efefdeb5;
+}
