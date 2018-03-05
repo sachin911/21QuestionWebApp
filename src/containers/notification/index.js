@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import * as types from '../../constants/actionTypes';
 import {getNotification} from './actions';
+import FriendButton from '../../components/friendButton';
 import './style.css';
 
 class Notification extends Component {
@@ -11,10 +12,12 @@ class Notification extends Component {
 		 openTab : false
 	 }
 
-	 this.handleClick = this.handleClick.bind(this);
+	 this.handleClicks = this.handleClicks.bind(this);
+	 this.handlePlayCTA = this.handlePlayCTA.bind(this);
+	 this.handleConnectCTA = this.handleConnectCTA.bind(this);
   }
 
-	handleClick() {
+	handleClicks() {
 		this.setState({
 			openTab : !this.state.openTab
 		})
@@ -24,16 +27,39 @@ class Notification extends Component {
 		}
 	}
 
-	render() {
+	handlePlayCTA(){
+		console.log("accepted the game request");
+	}
+
+	handleConnectCTA() {
+		console.log("accepeted the friend request");
+	}
+
+
+	makeIndividualNotifications(notifications, user) {
+		if(!notifications) return;
+		const notificationList = notifications.map((notification) => {
+			return <FriendButton notification={notification} key={notification.id} handlePlayCTA={this.handlePlayCTA} handleConnectCTA={this.handleConnectCTA}/>
+		})
 
 		return (
 			<div>
-				<div className="footer-left" onClick={this.handleClick}>
+				{notificationList}
+			</div>
+		)
+	}
+
+	render() {
+		const {notifications, user} = this.props;
+		return (
+			<div>
+				<div className="footer-left" onClick={this.handleClicks}>
 					Notification
 				</div>
 				{this.state.openTab &&
 					<div className="footer-left--openTab" >
-						{<span>All caught up!</span>}
+						{notifications && this.makeIndividualNotifications(notifications, user)}
+						{!notifications && <span> All caught up!</span>}
 					</div>
 				}
 			</div>
@@ -49,8 +75,9 @@ Notification.propTypes = {
 
 
 const mapStatetoProps = ({notification}) => {
-	console.log("notification >>>", notification);
 	return {
+			notifications: notification.notifications,
+			user: notification.user
 	};
 };
 
