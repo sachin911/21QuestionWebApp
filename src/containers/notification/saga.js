@@ -1,6 +1,6 @@
 import { put, call, take, fork , takeLatest, select, cancel, takeEvery} from 'redux-saga/effects';
 import { browserHistory } from 'react-router'
-import { friendList, gameRequest } from '../../Api/api';
+import { getNotifications } from './api';
 import * as types from '../../constants/actionTypes';
 
 const getUser = (state) => state.dashboard.user;
@@ -13,16 +13,16 @@ function* fetchNotifications(action) {
 				 userId: user.id
 			}
 
-      const response = yield call(friendList, options );
+      const response = yield call(getNotifications, options );
 			if(response.error){
-				console.log("error from the response>>>", response);
+				console.log("error from the response fetchNotifications>>>", response);
 				yield put({type: types.LOAD_NOTIFICATION_FAILED, message: response.message, errorCode: "LOAD_FRIENDS_FAILED"});
 			}else{
-				console.log("success from the response>>>", response);
-				yield put({type: types.LOAD_NOTIFICATION_SUCCESS, friends: response.results, user: user});
+				console.log("success from the response fetchNotifications>>>", response);
+				yield put({type: types.LOAD_NOTIFICATION_SUCCESS, notifications: response.results, user: user});
 			}
    } catch (e) {
-		 	console.log("something went wrong>>>");
+		 	console.log("something went wrong during fetchNotifications>>>",e);
       yield put({type: types.LOAD_NOTIFICATION_FAILED, message: e.message});
    }
 }
@@ -30,9 +30,9 @@ function* fetchNotifications(action) {
 
 export default function* notificationWatcher() {
 	while(true){
-		const watcher = yield takeLatest(types.LOAD_NOTIFICATION, fetchNotifications);
+		yield takeLatest(types.LOAD_NOTIFICATION, fetchNotifications);
 
-		const action = yield take([types.LOGIN_FAILED]); // why do i need this?
+		yield take([types.LOGIN_FAILED]); // why do i need this?
 
 		// yield call(logout);
 	}

@@ -20,7 +20,6 @@ export class DashBoard extends Component {
 				<GeometricAnimation />
 				<TopNav name={user.name} dispatchFunction={this.props.dispatch}/>
 				<Modal>
-					{/* <div className="dashboard"> */}
 						<div className="dashboard-wins dashboard-tally">
 							<span className="dashboard-tallyLabel">Total Wins</span>
 							<span className="dashboard-tallyCount">{user.win}</span>
@@ -30,7 +29,6 @@ export class DashBoard extends Component {
 							<span className="dashboard-tallyLabel">Total Loss</span>
 							<span className="dashboard-tallyCount">{user.loss}</span>
 						</div>
-					{/* </div> */}
 				</Modal>
 				<OnlineFriends dispatchFunction={this.props.dispatch}/>
 				<Notification dispatchFunction={this.props.dispatch}/>

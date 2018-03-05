@@ -1,7 +1,7 @@
 import { put, call, take, fork , takeLatest} from 'redux-saga/effects';
 import { browserHistory } from 'react-router'
 import {socket} from '../../utils/socket';
-import {userAuth} from '../../Api/api';
+import {userAuth} from './api';
 import * as types from '../../constants/actionTypes';
 
 function* logout () {

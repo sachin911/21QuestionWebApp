@@ -17,7 +17,7 @@ export default function (state=initialState, action={}) {
 					errorCode: action.type
 			};
 		case types.LOAD_NOTIFICATION_SUCCESS:
-			return {...state, notifications: action.notifications};
+			return {...state, notifications: action.notifications, user: action.user};
 		default: return state;
   }
 }

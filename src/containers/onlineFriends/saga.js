@@ -1,7 +1,7 @@
 import { put, call, take, fork , takeLatest, select, cancel, takeEvery} from 'redux-saga/effects';
 import { browserHistory } from 'react-router'
 import {socket} from '../../utils/socket';
-import { friendList, gameRequest } from '../../Api/api';
+import { friendList, gameRequest } from './api';
 import * as types from '../../constants/actionTypes';
 
 const getUser = (state) => state.dashboard.user;
@@ -23,7 +23,7 @@ function* fetchFriends(action) {
 				yield put({type: types.LOAD_FRIENDS_SUCCESS, friends: response.results, user: user});
 			}
    } catch (e) {
-		 	console.log("something went wrong>>>");
+		 	console.log("something went wrong>>>", e);
       yield put({type: types.LOAD_FRIENDS_FAILED, message: e.message});
    }
 }

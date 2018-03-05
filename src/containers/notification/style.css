@@ -11,7 +11,8 @@
     background-color: #efefdeb5;
     width: 105px;
     text-align: center;
-    overflow-y: auto; }
+    overflow-y: auto;
+    padding-right: 5px; }
 
 .footer-left:hover {
   background-color: #efefdeb5; }
