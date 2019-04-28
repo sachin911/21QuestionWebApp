@@ -1,13 +1,13 @@
 import * as types from '../../constants/actionTypes';
 
 const initialState = {
-  user: {
-		win: 0,
-		loss: 0,
-		email: "initial@state.com",
-		name: "Initial Name",
-		id: 2
-	}
+  // user: {
+	// 	win: 0,
+	// 	loss: 0,
+	// 	email: "initial@state.com",
+	// 	name: "Initial Name",
+	// 	id: 2
+	// }
 };
 
 

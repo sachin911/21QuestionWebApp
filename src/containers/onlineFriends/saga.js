@@ -1,10 +1,8 @@
 import { put, call, take, fork , takeLatest, select, cancel, takeEvery} from 'redux-saga/effects';
 import { browserHistory } from 'react-router'
-import {socket} from '../../utils/socket';
 import { friendList, gameRequest } from './api';
+import { getUser } from '../../utils/selector';
 import * as types from '../../constants/actionTypes';
-
-const getUser = (state) => state.dashboard.user;
 
 function* fetchFriends(action) {
    try {
@@ -16,22 +14,18 @@ function* fetchFriends(action) {
 
       const response = yield call(friendList, options );
 			if(response.error){
-				console.log("error from the response>>>", response);
 				yield put({type: types.LOAD_FRIENDS_FAILED, message: response.message, errorCode: "LOAD_FRIENDS_FAILED"});
 			}else{
-				console.log("success from the response>>>", response);
 				yield put({type: types.LOAD_FRIENDS_SUCCESS, friends: response.results, user: user});
 			}
    } catch (e) {
-		 	console.log("something went wrong>>>", e);
       yield put({type: types.LOAD_FRIENDS_FAILED, message: e.message});
    }
 }
 
 function* gameRequestApi(action){
 	try {
-		console.log("saga reached", action);
-
+		const user = yield select(getUser);
 		const option = {
 			userId: action.userId,
 			friendId: action.friendId
@@ -40,15 +34,34 @@ function* gameRequestApi(action){
 		const response = yield call(gameRequest, option);
 
 		if(response.error){
-			console.log("error from the gameRequest response>>>", response);
 			yield put({type: types.GAME_REQUEST_FAILED, message: response.message, errorCode: "GAME_REQUEST_FAILED"});
 		}else{
-			console.log("success from the gameRequest response>>>", response);
-			yield put({type: types.GAME_REQUEST_SUCCESS});
-			browserHistory.push('/game');
+			const gameId = response.game.id;
+			yield put(
+				{
+					type: types.GAME_REQUEST_SUCCESS,
+					selectedGame: {
+						...response.game
+					},
+					notfication: {
+						...response.notfication
+					},
+					user: user,
+					questionPersonInfo: {
+						...response.questionPersonInfo
+					},
+					answerPersonInfo: {
+						...response.answerPersonInfo
+					}
+				}
+			);
+
+			browserHistory.push({
+			  pathname: '/game',
+			  query: { gameId: response.game.id }
+			})
 		}
 	} catch (e) {
-		console.log("something went gameRequest wrong>>>", e);
 		yield put({type: types.GAME_REQUEST_FAILED, message: e.message});
 	}
 }

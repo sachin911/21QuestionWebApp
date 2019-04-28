@@ -18,7 +18,11 @@ export default function (state=initialState, action={}) {
 					errorCode: "action.type"
 			};
 		case types.LOAD_FRIENDS_SUCCESS:
-			return {...state, friends: action.friends, user: action.user};
+			return {
+				...state,
+				friends: action.friends,
+				user: action.user
+			};
 		default: return state;
   }
 }

@@ -6,3 +6,11 @@ export const getNotification = (userId) => {
 		userId: userId
 	}
 }
+
+export const joinGame = (gameId, userId) => {
+	return {
+		type: types.JOIN_GAME,
+		gameId: gameId,
+		userId: userId
+	}
+}

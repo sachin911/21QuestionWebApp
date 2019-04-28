@@ -1,7 +1,7 @@
 import { put, call, take, fork , takeLatest} from 'redux-saga/effects';
-import { browserHistory } from 'react-router'
-import {socket} from '../../utils/socket';
+import { browserHistory } from 'react-router';
 import {userAuth} from './api';
+import clientStorage from '../../utils/clientStorage';
 import * as types from '../../constants/actionTypes';
 
 function* logout () {
@@ -19,6 +19,7 @@ function* fetchUser(action) {
 			if(response.error){
 				yield put({type: types.LOGIN_FAILED, message: response.message, errorCode: "LOGIN_FAILED"});
 			}else{
+				clientStorage.inject("userId", response.id);
 				yield put({type: types.LOGIN_SUCCESS, user: response});
 				browserHistory.push('/dashboard');
 			}
