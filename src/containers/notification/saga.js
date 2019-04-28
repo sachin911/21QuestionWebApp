@@ -1,9 +1,8 @@
 import { put, call, take, fork , takeLatest, select, cancel, takeEvery} from 'redux-saga/effects';
 import { browserHistory } from 'react-router'
-import { getNotifications } from './api';
+import { getNotifications, loadGameData } from './api';
+import { getUser } from '../../utils/selector';
 import * as types from '../../constants/actionTypes';
-
-const getUser = (state) => state.dashboard.user;
 
 function* fetchNotifications(action) {
    try {
@@ -15,25 +14,52 @@ function* fetchNotifications(action) {
 
       const response = yield call(getNotifications, options );
 			if(response.error){
-				console.log("error from the response fetchNotifications>>>", response);
 				yield put({type: types.LOAD_NOTIFICATION_FAILED, message: response.message, errorCode: "LOAD_FRIENDS_FAILED"});
 			}else{
-				console.log("success from the response fetchNotifications>>>", response);
 				yield put({type: types.LOAD_NOTIFICATION_SUCCESS, notifications: response.results, user: user});
 			}
    } catch (e) {
-		 	console.log("something went wrong during fetchNotifications>>>",e);
       yield put({type: types.LOAD_NOTIFICATION_FAILED, message: e.message});
    }
 }
 
+function* joinGame(action) {
+	try {
+		const user = yield select(getUser);
+		const response = yield call(loadGameData, action.gameId); //create an endpoint for joining a game
+		if(response.error){
+			yield put({type: types.GAME_REQUEST_FAILED, message: response.message, errorCode: "GAME_REQUEST_FAILED"});
+		}else{
+			const gameId = response.game.id;
+			yield put(
+				{
+					type: types.GAME_REQUEST_SUCCESS,
+					selectedGame: {
+						...response.game
+					},
+					notfication: {
+						...response.notfication
+					},
+					user: user,
+					questionPersonInfo: {
+						...response.questionPersonInfo
+					},
+					answerPersonInfo: {
+						...response.answerPersonInfo
+					}
+				}
+			);
+			browserHistory.push({
+			  pathname: '/game',
+			  query: { gameId: gameId }
+			})
+		}
+	} catch (e) {
+		yield put({type: types.GAME_REQUEST_FAILED, message: e.message});
+	}
+}
 
 export default function* notificationWatcher() {
-	while(true){
 		yield takeLatest(types.LOAD_NOTIFICATION, fetchNotifications);
-
-		yield take([types.LOGIN_FAILED]); // why do i need this?
-
-		// yield call(logout);
-	}
+		yield takeLatest(types.JOIN_GAME, joinGame);
 }

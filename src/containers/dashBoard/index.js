@@ -5,16 +5,26 @@ import GeometricAnimation from '../../components/geometricAnimation';
 import TopNav from '../../components/topNav';
 import OnlineFriends from '../onlineFriends';
 import Notification from '../notification';
+import clientStorage from '../../utils/clientStorage';
+import {loadDashboard} from './actions';
 import './style.css';
 
 export class DashBoard extends Component {
 	constructor(){
 		super();
+	}
 
+	componentDidMount() {
+		const {user , dispatch} = this.props;
+		if(!user) {
+			const userId = clientStorage.extract("userId");
+			dispatch(loadDashboard(userId));
+		}
 	}
 
 	render(){
 		const { user } = this.props;
+		if(!user) return null;
 		return (
 			<div>
 				<GeometricAnimation />
@@ -43,7 +53,6 @@ DashBoard.propTypes = {
 }
 
 const mapStatetoProps = ({dashboard}) => {
-	// console.log("dashboard container>>", dashboard);
 	return {
 		user: dashboard.user
 	};

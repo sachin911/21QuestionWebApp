@@ -11,7 +11,7 @@ export default (
     <IndexRoute component={Login} />
     <Route path="census" component={collapsibleRow} />
 		<Route path="login" component={Login} />
-		<Route path="dashboard" component={DashBoard} />
 		<Route path="game" component={Game} />
+		<Route path="dashboard" component={DashBoard} />
   </Route>
 );

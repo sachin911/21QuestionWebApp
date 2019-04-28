@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import * as types from '../../constants/actionTypes';
-import {getNotification} from './actions';
+import {getNotification, joinGame} from './actions';
 import FriendButton from '../../components/friendButton';
 import './style.css';
 
@@ -27,8 +27,8 @@ class Notification extends Component {
 		}
 	}
 
-	handlePlayCTA(){
-		console.log("accepted the game request");
+	handlePlayCTA(gameId){
+		this.props.dispatchFunction(joinGame(gameId));
 	}
 
 	handleConnectCTA() {

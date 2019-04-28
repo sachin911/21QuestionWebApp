@@ -28,7 +28,6 @@ class OnlineFriends extends Component {
 
 	handlePlayCTA(friendId) {
 		const { user } = this.props;
-		console.log("starting the game with>>", friendId);
 		this.props.dispatchFunction(gameRequestAction(user.id, friendId));
 	}
 

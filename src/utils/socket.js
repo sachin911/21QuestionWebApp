@@ -3,7 +3,7 @@ var socket;
 
 const connectSocket = () => {
 	if(!socket){
-		socket = socketIoClient.connect("http://localhost:3000");
+		// socket = socketIoClient.connect("http://localhost:3000");
 	}
 }
 
