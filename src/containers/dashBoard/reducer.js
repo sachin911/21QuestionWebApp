@@ -24,6 +24,8 @@ export default function (state=initialState, action={}) {
       };
     case types.LOGIN_SUCCESS:
 			return {...state, user: action.user};
+		case types.LOAD_DASHBOARD_SUCCESS:
+			return {...state, user: action.user};
     default: return state;
   }
 }
